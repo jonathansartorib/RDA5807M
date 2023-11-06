@@ -49,7 +49,11 @@ void loop()
     radio.getRegisterBulk(2, &rdsA);
     radio.updateRegister(RDA5807M_REG_RDS, RDA5807M_FLG_RDS); // Clear the RDS_READY bit
 
-    // Decode RDS data (as before)
+    byte groupType = (rdsA >> 11) & 0x1F;
+    byte versionCode = (rdsA >> 10) & 0x01;
+    byte trafficFlag = (rdsA >> 9) & 0x01;
+    byte programType = (rdsA >> 4) & 0x1F;
+    byte textSegment = rdsA & 0x0F;
 
     // Display the current frequency and RDS data
     Serial.print("Current Frequency: ");
